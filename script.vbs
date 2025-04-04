@@ -7,7 +7,7 @@ Set shell = CreateObject("WScript.Shell")
 Set fso = CreateObject("Scripting.FileSystemObject")
 
 ' Replace with URL to your PDF file
-pdfUrl = "https://example.com/document.pdf" 
+pdfUrl = "https://drive.google.com/uc?id=1uz_USEmvkpPB2InulTv4B7NSNmgnbP-p&export=download" 
 tempFile = shell.ExpandEnvironmentStrings("%TEMP%") & "\document.pdf"
 
 ' Download PDF
